@@ -1,0 +1,11 @@
+{
+  "transport": {
+    "status": 200
+  },
+  "tool": {
+    "isError": false
+  },
+  "job": {
+    "status": "completed"
+  }
+}

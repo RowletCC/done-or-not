@@ -1,0 +1,9 @@
+{
+  "transport": {
+    "status": 200
+  },
+  "tool": {
+    "isError": true,
+    "message": "Document conversion failed"
+  }
+}

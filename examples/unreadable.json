@@ -1,0 +1,16 @@
+{
+  "transport": {
+    "status": 200
+  },
+  "tool": {
+    "isError": false
+  },
+  "job": {
+    "status": "completed"
+  },
+  "artifact": {
+    "expected": "report-final.pdf",
+    "observed": "report-final.pdf",
+    "readable": false
+  }
+}

@@ -1,0 +1,25 @@
+name: Scoped project inquiry
+description: Discuss an integration, data workflow or reproducible experiment.
+title: "Project inquiry: "
+body:
+  - type: markdown
+    attributes:
+      value: "Describe public requirements only. Do not include credentials, private datasets, financial details or personal information. An inquiry does not create a contract."
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What should the workflow produce?
+      placeholder: "Input format, intended output, and the current obstacle."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How will we know it worked?
+      placeholder: "A small example and concrete acceptance checks."
+    validations:
+      required: true
+  - type: input
+    id: timing
+    attributes:
+      label: Desired timeframe

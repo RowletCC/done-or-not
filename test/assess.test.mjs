@@ -1,0 +1,24 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { assess } from '../docs/assess.js';
+import { cases } from '../docs/cases.js';
+const complete = () => structuredClone(cases.find(c => c.id === 'completed').trace);
+const expected = ['pending','failed','failed','unknown','completed','failed'];
+for (const [i,c] of cases.entries()) test(c.id, () => assert.equal(assess(c.trace).status, expected[i]));
+test('input is not mutated', () => {const input=complete(), original=structuredClone(input);assess(input);assert.deepEqual(input,original);});
+test('malformed top level is unknown', () => {for(const input of [null,[],true,'ok',17])assert.equal(assess(input).status,'unknown');});
+test('missing and invalid HTTP statuses are unknown', () => {for(const status of [undefined,'200',NaN,200.5,99,600]){const t=complete();t.transport={status};assert.equal(assess(t).status,'unknown');}});
+test('non-success transport cannot be overruled by artifact', () => {for(const status of [301,404,500]){const t=complete();t.transport.status=status;assert.equal(assess(t).status,'failed');}});
+test('tool success must be explicit for this contract', () => {const t=complete();t.tool={};assert.equal(assess(t).status,'unknown');});
+test('unknown job state stays unknown', () => {const t=complete();t.job.status='probably';assert.equal(assess(t).status,'unknown');});
+test('failed or cancelled job cannot be overruled by a file', () => {for(const status of ['failed','cancelled']){const t=complete();t.job.status=status;assert.equal(assess(t).status,'failed');}});
+test('blank filenames are not evidence', () => {const t=complete();t.artifact.expected='';t.artifact.observed='';assert.equal(assess(t).status,'unknown');});
+test('truthy strings are not read checks', () => {const t=complete();t.artifact.readable='true';assert.equal(assess(t).status,'unknown');});
+test('CLI separates success, incomplete outcome, and bad input', () => {
+  const run = (...args) => spawnSync(process.execPath,['bin/check.mjs',...args],{encoding:'utf8'});
+  assert.equal(run('examples/completed.json').status,0);
+  assert.equal(run('examples/accepted.json').status,1);
+  assert.equal(run('missing.json').status,2);
+  assert.equal(run().status,2);
+});
