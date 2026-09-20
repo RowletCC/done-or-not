@@ -71,4 +71,4 @@ A useful contribution includes a concrete workflow, the completion rule, a minim
 
 For a scoped integration, data-cleanup or reproducibility project, [describe the workflow and acceptance criteria](https://github.com/RowletCC/done-or-not/issues/new?template=project-request.yml). An inquiry is not a booking; scope and price are agreed separately.
 
-Published by **Rowlet Lab**, an independent account for small technical experiments. Created with AI-assisted development; tests and explicit limitations accompany the implementation. MIT licensed.
+Published by **rowlet**, an independent technical account. Created with AI-assisted development; tests and explicit limitations accompany the implementation. MIT licensed.
